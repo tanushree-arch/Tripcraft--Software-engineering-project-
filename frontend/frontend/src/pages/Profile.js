@@ -2,7 +2,6 @@ import Sidebar from "../components/Sidebar";
 import { useState } from "react";
 
 function Profile() {
-
   const [user, setUser] = useState({
     name: "Tanu",
     email: "tanu@email.com",
@@ -30,14 +29,22 @@ function Profile() {
   // 📁 Upload from gallery
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+
     if (file) {
       const url = URL.createObjectURL(file);
-      setUser({ ...user, image: url });
+
+      setUser({
+        ...user,
+        image: url
+      });
     }
   };
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSave = () => {
@@ -45,14 +52,24 @@ function Profile() {
   };
 
   const addToVisit = () => {
-    if (!input) return;
-    setToVisit([...toVisit, input]);
+    if (!input.trim()) return;
+
+    setToVisit([
+      ...toVisit,
+      input.trim()
+    ]);
+
     setInput("");
   };
 
   const addVisited = () => {
-    if (!input) return;
-    setVisited([...visited, input]);
+    if (!input.trim()) return;
+
+    setVisited([
+      ...visited,
+      input.trim()
+    ]);
+
     setInput("");
   };
 
@@ -67,81 +84,144 @@ function Profile() {
     <div style={{ display: "flex" }}>
       <Sidebar />
 
-      <div style={{
-        flex: 1,
-        minHeight: "100vh",
-        background: "#fff0f5",
-        padding: "40px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-      }}>
-
-        <h1 style={{ color: "#d63384" }}>My Profile 👤</h1>
+      <div
+        style={{
+          flex: 1,
+          minHeight: "100vh",
+          background: "#fff0f5",
+          padding: "40px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}
+      >
+        <h1 style={{ color: "#d63384" }}>
+          My Profile 👤
+        </h1>
 
         {/* 🌸 ROSE BANNERS */}
-        <div style={{
-          display: "flex",
-          gap: "10px",
-          width: "80%",
-          maxWidth: "900px",
-          marginTop: "20px"
-        }}>
-          <img src="profile1.jpg" style={bannerImg}/>
-          <img src="profile2.jpg" style={bannerImg}/>
-          <img src="profile3.jpg" style={bannerImg}/>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            width: "80%",
+            maxWidth: "900px",
+            marginTop: "20px"
+          }}
+        >
+          <img
+            src="profile1.jpg"
+            alt="Rose banner"
+            style={bannerImg}
+          />
+
+          <img
+            src="profile2.jpg"
+            alt="Rose banner"
+            style={bannerImg}
+          />
+
+          <img
+            src="profile3.jpg"
+            alt="Rose banner"
+            style={bannerImg}
+          />
         </div>
 
         {/* PROFILE CARD */}
         <div style={cardStyle}>
-
           <img
             src={
               user.image ||
               "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             }
+            alt="Profile"
             style={profileImg}
           />
 
           {editing ? (
             <>
-              <input type="file" onChange={handleImageUpload} />
+              <input
+                type="file"
+                onChange={handleImageUpload}
+              />
 
-              <input name="name" value={user.name}
-                onChange={handleChange} style={inputStyle} />
+              <input
+                name="name"
+                value={user.name}
+                onChange={handleChange}
+                style={inputStyle}
+                placeholder="Name"
+              />
 
-              <input name="email" value={user.email}
-                onChange={handleChange} style={inputStyle} />
+              <input
+                name="email"
+                value={user.email}
+                onChange={handleChange}
+                style={inputStyle}
+                placeholder="Email"
+              />
 
-              <input name="age" placeholder="Age"
-                value={user.age} onChange={handleChange} style={inputStyle} />
+              <input
+                name="age"
+                placeholder="Age"
+                value={user.age}
+                onChange={handleChange}
+                style={inputStyle}
+              />
 
-              <select name="gender" value={user.gender}
-                onChange={handleChange} style={inputStyle}>
+              <select
+                name="gender"
+                value={user.gender}
+                onChange={handleChange}
+                style={inputStyle}
+              >
                 <option value="">Gender</option>
-                <option>Female</option>
-                <option>Male</option>
-                <option>Other</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
               </select>
 
-              <textarea name="bio"
+              <textarea
+                name="bio"
                 value={user.bio}
                 onChange={handleChange}
-                style={{ ...inputStyle, height: "80px" }} />
+                style={{
+                  ...inputStyle,
+                  height: "80px"
+                }}
+                placeholder="Bio"
+              />
 
-              <button onClick={handleSave} style={btnStyle}>
+              <button
+                onClick={handleSave}
+                style={btnStyle}
+              >
                 Save 💾
               </button>
             </>
           ) : (
             <>
               <h2>{user.name}</h2>
-              <p>{user.email}</p>
-              <p>Age: {user.age || "-"}</p>
-              <p>Gender: {user.gender || "-"}</p>
-              <p>{user.bio}</p>
 
-              <button onClick={() => setEditing(true)} style={btnStyle}>
+              <p>{user.email}</p>
+
+              <p>
+                Age: {user.age || "-"}
+              </p>
+
+              <p>
+                Gender: {user.gender || "-"}
+              </p>
+
+              <p>
+                {user.bio}
+              </p>
+
+              <button
+                onClick={() => setEditing(true)}
+                style={btnStyle}
+              >
                 Edit Profile ✏️
               </button>
             </>
@@ -149,9 +229,15 @@ function Profile() {
         </div>
 
         {/* ✈️ TRAVEL LISTS */}
-        <div style={{ width: "80%", marginTop: "30px" }}>
-
-          <h2 style={{ color: "#d63384" }}>Travel Planner ✨</h2>
+        <div
+          style={{
+            width: "80%",
+            marginTop: "30px"
+          }}
+        >
+          <h2 style={{ color: "#d63384" }}>
+            Travel Planner ✨
+          </h2>
 
           <input
             placeholder="Add place..."
@@ -160,25 +246,68 @@ function Profile() {
             style={inputStyle}
           />
 
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button onClick={addToVisit} style={btnStyle}>To Visit ✈️</button>
-            <button onClick={addVisited} style={btnStyle}>Visited ✅</button>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px"
+            }}
+          >
+            <button
+              onClick={addToVisit}
+              style={btnStyle}
+            >
+              To Visit ✈️
+            </button>
+
+            <button
+              onClick={addVisited}
+              style={btnStyle}
+            >
+              Visited ✅
+            </button>
           </div>
 
-          <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginTop: "20px"
+            }}
+          >
+            {/* TO VISIT */}
             <div style={listBox}>
               <h3>To Visit ✈️</h3>
-              {toVisit.map((item, i) => <p key={i}>• {item}</p>)}
+
+              {toVisit.length === 0 ? (
+                <p>No places added yet.</p>
+              ) : (
+                toVisit.map((item, i) => (
+                  <p key={i}>
+                    • {item}
+                  </p>
+                ))
+              )}
             </div>
 
+            {/* VISITED */}
             <div style={listBox}>
               <h3>Visited ✅</h3>
-              {visited.map((item, i) => <p key={i}>• {item}</p>)}
+
+              {visited.length === 0 ? (
+                <p>No places added yet.</p>
+              ) : (
+                visited.map((item, i) => (
+                  <p key={i}>
+                    • {item}
+                  </p>
+                ))
+              )}
             </div>
 
+            {/* ESSENTIALS */}
             <div style={listBox}>
               <h3>Essentials 🎒</h3>
+
               {Object.keys(essentials).map((item) => (
                 <div key={item}>
                   <input
@@ -186,20 +315,22 @@ function Profile() {
                     checked={essentials[item]}
                     onChange={() => toggleEssential(item)}
                   />
+                  {" "}
                   {item}
                 </div>
               ))}
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   );
 }
 
+// ============================================================
 // STYLES
+// ============================================================
+
 const bannerImg = {
   width: "33.3%",
   height: "150px",
@@ -237,7 +368,8 @@ const inputStyle = {
   padding: "10px",
   margin: "8px 0",
   borderRadius: "6px",
-  border: "1px solid #ddd"
+  border: "1px solid #ddd",
+  boxSizing: "border-box"
 };
 
 const btnStyle = {
